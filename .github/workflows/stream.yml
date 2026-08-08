@@ -1,0 +1,91 @@
+name: 24/7 Cricket Streamer
+
+on:
+  workflow_dispatch:
+    inputs:
+      stream_id:
+        description: 'Select Stream Server (1, 2, or 3)'
+        required: true
+        type: choice
+        options:
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+        default: '1'
+      target_url:
+        description: 'Target Video Link (Auto Mode)'
+        required: true
+        default: 'https://dadocric.st/player.php?id=starsp3'
+      stream_key:
+        description: 'OK.ru Stream Key (Optional if ID 1, 2, 3 used)'
+        required: false
+        default: '14136719122027_13152308497003_hnlk6em2e4'
+      proxy_ip:
+        description: 'Proxy IP Address'
+        required: true
+        default: '31.59.20.176'
+      proxy_port:
+        description: 'Proxy Port'
+        required: true
+        default: '6754'
+      proxy_user:
+        description: 'Proxy Username'
+        required: true
+        default: 'ehhppbec'
+      proxy_pass:
+        description: 'Proxy Password'
+        required: true
+        default: '5f69y4wngj70'
+      manual_m3u8:
+        description: '(OPTIONAL) Direct m3u8 Link'
+        required: false
+        default: ''
+      manual_referer:
+        description: '(OPTIONAL) Referer for Direct Link'
+        required: false
+        default: ''
+      manual_origin:
+        description: '(OPTIONAL) Origin for Direct Link'
+        required: false
+        default: ''
+      manual_ffmpeg_cmd:
+        description: '(CASE 2) Paste Full FFmpeg Command here'
+        required: false
+        default: ''
+
+jobs:
+  run-stream:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360 # 6 Hours Limit
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Install System Tools & Fake Screen (Xvfb)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ffmpeg google-chrome-stable xvfb
+
+    - name: Install Python Requirements
+      run: |
+        pip install selenium selenium-wire webdriver-manager blinker==1.7.0 "setuptools<70" requests
+
+    - name: Start The Bot with Virtual Screen
+      env:
+        GH_PAT: ${{ secrets.GH_PAT }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
+        GITHUB_REF_NAME: ${{ github.ref_name }}
+        STREAM_ID: ${{ inputs.stream_id }}
+        TARGET_URL: ${{ inputs.target_url }}
+        STREAM_KEY: ${{ inputs.stream_key }}
+        PROXY_IP: ${{ inputs.proxy_ip }}
+        PROXY_PORT: ${{ inputs.proxy_port }}
+        PROXY_USER: ${{ inputs.proxy_user }}
+        PROXY_PASS: ${{ inputs.proxy_pass }}
+        MANUAL_M3U8: ${{ inputs.manual_m3u8 }}
+        MANUAL_REFERER: ${{ inputs.manual_referer }}
+        MANUAL_ORIGIN: ${{ inputs.manual_origin }}
+        MANUAL_FFMPEG_CMD: ${{ inputs.manual_ffmpeg_cmd }}
+      run: xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" python -u final_bot.py
