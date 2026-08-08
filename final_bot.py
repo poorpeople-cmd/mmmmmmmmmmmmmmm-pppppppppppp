@@ -259,7 +259,8 @@ def main():
             "url": MANUAL_M3U8,
             "referer": MANUAL_REFERER,
             "origin": MANUAL_ORIGIN,
-            "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+            # "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+            "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "cookie": ""
         }
     else:
