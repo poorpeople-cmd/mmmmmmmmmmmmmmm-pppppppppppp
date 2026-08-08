@@ -23,7 +23,7 @@ MULTI_KEYS = {
     '1': os.environ.get('STREAM_KEY', '14136719122027_13152308497003_hnlk6em2e4'), # Default Key
     # '1': '13792808935019_12476172012139_mstifuzoo4',
     '2': '15255038074475_15283122080363_ai5qqp2we4', # 👈 Apni Stream 2 ki key yahan dalein
-    '3': '14136762048107_13152392710763_22fobqpsdi',  # 👈 Apni Stream 3 ki key yahan dalein
+    '3': '15255045480043_15283135842923_tldl4bhmii',  # 👈 Apni Stream 3 ki key yahan dalein
     '4': '14136778563179_13152426265195_c5quhoj2vm'
 }
 
